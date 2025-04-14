@@ -39,6 +39,12 @@ class AsignationForm(forms.ModelForm):
             Num {obj.last_asignation_number} 
             {obj.last_asignation_type} 
             {obj.last_asignation_room}  
-            ({obj.days_from_last_asignation} dias)
+            ({obj.days_from_last_asignation} dias) 
+            Gen: {obj.gender}
         """
         self.fields['helper'].label_from_instance = lambda obj: f"{obj.name} ({obj.last_helper_date} dias)"
+        self.fields['asignation_type'].widget.attrs['onchange'] = "filterFormFields();"
+        print(self.instance.__dict__)
+        print(self.instance.asignation_type_id)
+
+        self.fields['asignation_type'].widget.attrs['data-current-asignation-type'] = str(self.instance.asignation_type_id) if self.instance.asignation_type_id else ''

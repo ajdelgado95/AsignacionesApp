@@ -151,5 +151,37 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 });
+  // Function to filter the "person" dropdown based on "asignation_type"
+  function filterFormFields() {
+    // Get the selected value of the "asignation_type" dropdown
+    const asignationType = document.getElementById('id_asignation_type').value;
+
+    // Get the "person" dropdown
+    const personSelect = document.getElementById('id_person');
+    
+    // Get all options in the "person" dropdown
+    const options = personSelect.getElementsByTagName('option');
+
+    // Loop through all options in the "person" dropdown and filter them based on "Gen: M"
+    for (let i = 0; i < options.length; i++) {
+      const option = options[i];
+      
+      if (asignationType === '2') {  // 'LECTURA DE LA BIBLIA' option
+        // Only show options containing "Gen: M"
+        if (option.innerText.includes('Gen: M')) {
+          option.style.display = ''; // Show option
+        } else {
+          option.style.display = 'none'; // Hide option
+        }
+      } else {
+        // If it's any other selection, show all options
+        option.style.display = '';
+      }
+    }
+  }
+
+  // Add the event listener to the "asignation_type" select input
+  document.getElementById('id_asignation_type').addEventListener('change', filterFormFields);
+
 </script>
 {% endblock %}
