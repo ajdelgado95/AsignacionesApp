@@ -84,6 +84,10 @@
                 {{ form.person }}
             </div>
             <div class="form-row">
+              <label for="{{ form.asignation_number.id_for_label }}"><strong>Numero de Intervencion:</strong></label>
+              {{ form.asignation_number }}
+          </div>
+            <div class="form-row">
                 <label for="{{ form.asignation_type.id_for_label }}"><strong>Asignacion Tipo:</strong></label>
                 {{ form.asignation_type }}
             </div>
@@ -99,6 +103,14 @@
                 <label for="form.room.id_for_label"><strong>Sala:</strong></label>
                 {{ form.room }}
             </div>
+            <div class="form-row">
+              <label for="form.attended.id_for_label"><strong>Asistio:</strong></label>
+              {{ form.attended }}
+          </div>
+            <div class="form-row">
+              <label for="form.notes.id_for_label"><strong>Notas:</strong></label>
+              {{ form.notes }}
+          </div>
         </fieldset>
         <button type="submit" class="button default">Guardar</button>
     </form>

@@ -13,7 +13,8 @@ from datetime import datetime
 
 def asignation_list(request):
     date_filter = request.GET.get('date')
-    asignations = Asignation.objects.filter(asignation_date=date_filter) if date_filter else Asignation.objects.all()
+    asignations = Asignation.objects.filter(asignation_date=date_filter).order_by('asignation_date', 'room','asignation_number')\
+        if date_filter else Asignation.objects.all().order_by('asignation_date', 'room','asignation_number')
 
     if request.method == 'POST':
         form = AsignationForm(request.POST)
@@ -38,14 +39,18 @@ def asignation_list_by_month(request):
     asignations = Asignation.objects.filter(
         asignation_date__year=year,
         asignation_date__month=month
-    )
+    ).order_by('asignation_date', 'room','asignation_number')
 
     # Handle form submission
     if request.method == 'POST':
         form = AsignationForm(request.POST)
+        print("Pringint request {}".format(request.POST))
         if form.is_valid():
             form.save()
             return redirect('asignation_list_by_month')  # Redirect to the same view after saving
+        else:
+            print("Form is not valid")
+            print(form.errors)
     else:
         form = AsignationForm()
 

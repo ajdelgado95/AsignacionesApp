@@ -40,7 +40,7 @@ class AsignationForm(forms.ModelForm):
             {obj.last_asignation_type} 
             {obj.last_asignation_room}  
             ({obj.days_from_last_asignation} dias) 
-            Gen: {obj.gender}
+            Gen: {obj.gender    }
         """
         self.fields['helper'].label_from_instance = lambda obj: f"{obj.name} ({obj.last_helper_date} dias)"
         self.fields['asignation_type'].widget.attrs['onchange'] = "filterFormFields();"
@@ -48,3 +48,21 @@ class AsignationForm(forms.ModelForm):
         print(self.instance.asignation_type_id)
 
         self.fields['asignation_type'].widget.attrs['data-current-asignation-type'] = str(self.instance.asignation_type_id) if self.instance.asignation_type_id else ''
+
+    def save(self, commit=True):
+        print("Saving AsignationForm...")
+        print("Cleaned data:", self.cleaned_data)
+
+        instance = super().save(commit=False)
+
+        print("Instance before save:", instance.__dict__)
+        if self.instance.pk is None:
+            instance.attended = None
+
+        if commit:
+            instance.save()
+            self.save_m2m()  # Si tienes relaciones ManyToMany
+
+        print("Instance after save:", instance.__dict__)
+
+        return instance
